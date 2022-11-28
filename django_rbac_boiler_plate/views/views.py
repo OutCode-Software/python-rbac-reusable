@@ -24,11 +24,16 @@ class LoginViewSet(TokenObtainPairView):
             return Response({'message': "No active account found with the given credentials"},
                             status=HTTP_401_UNAUTHORIZED)
         try:
-            return super().post(request, *args, **kwargs)
+            response = super().post(request, *args, **kwargs)
+            user = User.objects.filter(username=request.data['username']).first()
+            data = {
+                'access': response.data['access'],
+                'refresh': response.data['refresh'],
+                'name' : user.first_name + ' ' + user.last_name,
+            }
+            return Response({'data':data, 'message':'success'}, status=status.HTTP_200_OK)
 
         except Exception:
-            import pdb
-            pdb.set_trace()
             return Response({'message': 'No active account found with the given credentials.'},
                             status=HTTP_401_UNAUTHORIZED)
 
