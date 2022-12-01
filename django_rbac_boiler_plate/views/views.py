@@ -17,6 +17,9 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework_simplejwt.exceptions import TokenError
 
+from django_rbac_boiler_plate.utils import on_state_change_push_notification
+
+
 class LoginViewSet(TokenObtainPairView):
     serializer_class = LoginTokenSerializer
     def post(self, request, *args, **kwargs):
@@ -31,6 +34,11 @@ class LoginViewSet(TokenObtainPairView):
                 'refresh': response.data['refresh'],
                 'name' : user.first_name + ' ' + user.last_name,
             }
+            #Test Puropose for push Notification
+
+            # title = 'Push Notification'
+            # body = 'Test Push notification send to User'
+            # on_state_change_push_notification(request.user, title, body)
             return Response({'data':data, 'message':'success'}, status=status.HTTP_200_OK)
 
         except Exception:

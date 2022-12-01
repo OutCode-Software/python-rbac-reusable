@@ -19,7 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('django_rbac_boiler_plate.urls'))
+    path('api/',include('django_rbac_boiler_plate.urls')),
+    path('api/',include('notifications.urls'))
 ]
 
 if settings.DEBUG:

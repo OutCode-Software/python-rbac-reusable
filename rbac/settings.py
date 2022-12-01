@@ -15,6 +15,16 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from decouple import config, Csv
 
+#Firebase Setup
+
+import firebase_admin
+
+from firebase_admin import initialize_app,credentials
+
+cred = credentials.Certificate(config("GOOGLE_APPLICATION_CREDENTIALS"))
+
+FIREBASE_APP = firebase_admin.initialize_app(cred)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -47,6 +57,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_rbac_boiler_plate',
     'rest_framework_simplejwt.token_blacklist',
+    'fcm_django',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -216,3 +228,5 @@ SWAGGER_SETTINGS = {
 }
 
 AUTH_USER_MODEL = "django_rbac_boiler_plate.User"
+
+
